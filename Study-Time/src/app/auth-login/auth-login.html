@@ -1,1 +1,53 @@
-<p>auth-login works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./auth-login.css" />
+    <script src="./auth-login.js" defer></script>
+    <title>Login Page</title>
+  </head>
+  <body>
+    <h1>Gamified Study Tracker</h1>
+
+    <section>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="loginForm" novalidate>
+        <fieldset>
+          <legend>Login</legend>
+
+          <input type="text" id="username" placeholder="Email" formControlName="username" />
+          <p class="error" *ngIf="username.touched && username.invalid">
+            <span *ngIf="username.errors?.['required']">Email is required.</span>
+            <span *ngIf="username.errors?.['email']">Invalid email format.</span>
+          </p>
+
+          <br />
+
+          <input type="password" id="password" placeholder="Password" formControlName="password" />
+          <p class="error" *ngIf="password.touched && password.invalid">
+            <span *ngIf="password.errors?.['required']">Password is required.</span>
+            <span *ngIf="password.errors?.['minlength']">
+              Password must be at least 6 characters.
+            </span>
+          </p>
+
+          <br />
+
+          <!-- Angular handles submit -->
+          <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+          <br />
+          <a routerLink="/forgot-password">Forgot Password?</a>
+          <br />
+          <a routerLink="/create-account">Create Account</a>
+          <br />
+
+          <div class="check">
+            <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
+            <label for="rememberMe">Remember Me</label>
+          </div>
+        </fieldset>
+      </form>
+    </section>
+  </body>
+</html>
