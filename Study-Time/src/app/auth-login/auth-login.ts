@@ -1,22 +1,20 @@
 // auth-login.ts
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router'; // 👈 import Router
+import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'auth-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './auth-login.html',
   styleUrls: ['./auth-login.css'],
 })
 export class AuthLogin {
   loginForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router // 👈 inject it here
-  ) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -36,6 +34,6 @@ export class AuthLogin {
       this.loginForm.markAllAsTouched();
       return;
     }
-    this.router.navigate(['/dashboard']); // 👈 now this works
+    this.router.navigate(['/dashboard']);
   }
 }

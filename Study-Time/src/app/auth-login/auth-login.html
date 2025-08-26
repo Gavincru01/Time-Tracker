@@ -1,66 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./auth-login.css" />
-    <script src="./auth-login.js" defer></script>
-    <title>Login Page</title>
-  </head>
-  <body>
-    <h1 class="web-name">Gamified Study Tracker</h1>
-    <section class="login-hero">
-      <div class="login-card">
-        <h2 class="card-title">Login</h2>
+<section class="login-hero">
+  <div class="login-stack">
+    <h1 class="web-name">StuQuest</h1>
+    <div class="login-card">
+      <h2 class="card-title">Login</h2>
 
-        <form
-          [formGroup]="loginForm"
-          (ngSubmit)="onSubmit()"
-          id="loginForm"
-          class="form-grid"
-          novalidate
-        >
-          <label class="sr-only" for="username">Email</label>
-          <input
-            type="text"
-            id="username"
-            placeholder="Email"
-            formControlName="username"
-            autocomplete="email"
-            class="input"
-          />
-          <p class="error" *ngIf="username.touched && username.invalid">
-            <span *ngIf="username.errors?.['required']">Email is required.</span>
-            <span *ngIf="username.errors?.['email']">Invalid email format.</span>
-          </p>
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()"
+        id="loginForm"
+        class="form-grid"
+        novalidate
+      >
+        <label class="sr-only" for="username">Email</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="Email"
+          formControlName="username"
+          autocomplete="email"
+          class="input"
+        />
+        <p class="error" *ngIf="username.touched && username.invalid">
+          <span *ngIf="username.errors?.['required']">Email is required.</span>
+          <span *ngIf="username.errors?.['email']">Invalid email format.</span>
+        </p>
 
-          <label class="sr-only" for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            formControlName="password"
-            autocomplete="current-password"
-            class="input"
-          />
-          <p class="error" *ngIf="password.touched && password.invalid">
-            <span *ngIf="password.errors?.['required']">Password is required.</span>
-            <span *ngIf="password.errors?.['minlength']">Min 6 characters.</span>
-          </p>
+        <label class="sr-only" for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Password"
+          formControlName="password"
+          autocomplete="current-password"
+          class="input"
+        />
+        <p class="error" *ngIf="password.touched && password.invalid">
+          <span *ngIf="password.errors?.['required']">Password is required.</span>
+          <span *ngIf="password.errors?.['minlength']">Min 6 characters.</span>
+        </p>
 
-          <button class="btn-primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+        <button class="btn-primary" type="submit" [disabled]="loginForm.invalid">Login</button>
 
-          <div class="links">
-            <a routerLink="/forgot-password">Forgot Password?</a>
-            <a routerLink="/create-account">Create Account</a>
-          </div>
+        <div class="links">
+          <a routerLink="/forgot-password">Forgot Password?</a>
+          <a routerLink="/create-account">Create Account</a>
+        </div>
 
-          <label class="remember">
-            <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
-            <span>Remember Me</span>
-          </label>
-        </form>
-      </div>
-    </section>
-  </body>
-</html>
+        <label class="remember">
+          <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
+          <span>Remember Me</span>
+        </label>
+      </form>
+    </div>
+  </div>
+</section>

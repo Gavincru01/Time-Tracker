@@ -1,0 +1,174 @@
+:host {
+  display: block;
+  padding: 1rem;
+  background: #fafafa;
+}
+.dash-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.dash-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+.btn {
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 8px;
+  background: #2b57ff;
+  color: #fff;
+  cursor: pointer;
+}
+.btn.ghost {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.kpi {
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+.kpi-label {
+  color: #555;
+  font-size: 0.9rem;
+}
+.kpi-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0.25rem 0;
+}
+.kpi-sub {
+  color: #777;
+  font-size: 0.85rem;
+}
+.progress {
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+.progress .bar {
+  height: 100%;
+  background: #8ea5ff;
+}
+
+.quick {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+.panel h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(21, 1fr);
+  gap: 4px;
+}
+.day {
+  width: 100%;
+  padding-top: 100%;
+  border-radius: 4px;
+  background: #f2f2f2;
+}
+.day.lv1 {
+  background: #dbe6ff;
+}
+.day.lv2 {
+  background: #b9c7ff;
+}
+.day.lv3 {
+  background: #8ea5ff;
+}
+.day.lv4 {
+  background: #5d7dff;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+.legend .swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+  background: #f2f2f2;
+}
+.legend .lv1 {
+  background: #dbe6ff;
+}
+.legend .lv2 {
+  background: #b9c7ff;
+}
+.legend .lv3 {
+  background: #8ea5ff;
+}
+.legend .lv4 {
+  background: #5d7dff;
+}
+
+.sessions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.sessions li {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+.muted {
+  color: #888;
+}
