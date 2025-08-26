@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, HostListener, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
@@ -11,7 +11,7 @@ type Session = { id: number; date: string; minutes: number; course?: string };
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
-export class Dashboard {
+export class Dashboard implements OnDestroy {
   private router = inject(Router);
 
   // --- mock data ---
@@ -43,9 +43,11 @@ export class Dashboard {
       .filter((s) => s.date >= this.startOfWeekISO())
       .reduce((sum, s) => sum + s.minutes, 0)
   );
+
   progressPct = computed(() =>
     Math.min(100, (this.currentWeekMinutes() / this.weeklyGoalMin()) * 100)
   );
+
   streak = computed(() => this.computeStreak(this.sessions()));
   longestStreak = computed(() => this.computeStreak(this.sessions(), true));
 
@@ -94,5 +96,87 @@ export class Dashboard {
       out.push({ date: iso, minutes: byDay.get(iso) || 0 });
     }
     return out;
+  }
+
+  // ===============================
+  //          TIMER SECTION
+  // ===============================
+  // State (signals so the template updates automatically)
+  h = signal(0);
+  m = signal(0);
+  s = signal(0);
+  private intervalId: any = null;
+
+  get running(): boolean {
+    return this.intervalId != null;
+  }
+
+  display = computed(() => {
+    const hh = String(this.h()).padStart(2, '0');
+    const mm = String(this.m()).padStart(2, '0');
+    const ss = String(this.s()).padStart(2, '0');
+    return `${hh}:${mm}:${ss}`;
+  });
+
+  isZero = computed(() => this.h() === 0 && this.m() === 0 && this.s() === 0);
+
+  private tick() {
+    let s = this.s() + 1;
+    let m = this.m();
+    let h = this.h();
+    if (s === 60) {
+      s = 0;
+      m += 1;
+    }
+    if (m === 60) {
+      m = 0;
+      h += 1;
+    }
+    this.s.set(s);
+    this.m.set(m);
+    this.h.set(h);
+  }
+  isRunning = signal(false);
+  startTimer() {
+    if (this.intervalId) return;
+    this.intervalId = setInterval(() => this.tick(), 1000);
+    this.isRunning.set(true); // <— now “running” is reactive
+  }
+
+  pauseTimer() {
+    if (!this.intervalId) return;
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+    this.isRunning.set(false); // <— reflect paused state
+  }
+
+  toggleTimer() {
+    if (this.isRunning()) {
+      this.pauseTimer();
+    } else {
+      this.startTimer();
+    }
+  }
+
+  resetTimer() {
+    this.pauseTimer();
+    this.h.set(0);
+    this.m.set(0);
+    this.s.set(0);
+  }
+
+  // Keyboard shortcuts: Space = Start/Pause, R = Reset
+  @HostListener('document:keydown', ['$event'])
+  handleKeydown(e: KeyboardEvent) {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      this.toggleTimer();
+    } else if (e.key.toLowerCase() === 'r') {
+      this.resetTimer();
+    }
+  }
+
+  ngOnDestroy() {
+    this.pauseTimer();
   }
 }

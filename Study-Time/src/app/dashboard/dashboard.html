@@ -1,78 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./dashboard.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <section class="dash-wrap">
-      <header class="dash-top">
-        <div class="brand">Dashboard</div>
-        <div class="spacer"></div>
-        <button class="btn ghost" (click)="logout()">Logout</button>
-      </header>
+<section class="dash-wrap">
+  <header class="dash-top">
+    <div class="brand">Dashboard</div>
+    <div class="spacer"></div>
+    <button class="btn ghost" (click)="logout()">Logout</button>
+  </header>
 
-      <section class="kpis">
-        <div class="kpi">
-          <div class="kpi-label">Current streak</div>
-          <div class="kpi-value">{{ streak() }} days</div>
-          <div class="kpi-sub">Longest: {{ longestStreak() }}d</div>
-        </div>
+  <section class="kpis">
+    <div class="kpi">
+      <div class="kpi-label">Current streak</div>
+      <div class="kpi-value">{{ streak() }} days</div>
+      <div class="kpi-sub">Longest: {{ longestStreak() }}d</div>
+    </div>
 
-        <div class="kpi">
-          <div class="kpi-label">This week</div>
-          <div class="kpi-value">{{ currentWeekMinutes() / 60 | number : '1.0-1' }} h</div>
-          <div class="progress">
-            <div class="bar" [style.width.%]="progressPct()"></div>
-          </div>
-          <div class="kpi-sub">{{ currentWeekMinutes() }} / {{ weeklyGoalMin() }} min</div>
-        </div>
+    <div class="kpi">
+      <div class="kpi-label">This week</div>
+      <div class="kpi-value">{{ currentWeekMinutes() / 60 | number : '1.0-1' }} h</div>
+      <div class="progress">
+        <div class="bar" [style.width.%]="progressPct()"></div>
+      </div>
+      <div class="kpi-sub">{{ currentWeekMinutes() }} / {{ weeklyGoalMin() }} min</div>
+    </div>
 
-        <div class="kpi">
-          <div class="kpi-label">Quick actions</div>
-          <div class="quick">
-            <button class="btn" (click)="addMockSession(30)">+30 min</button>
-            <button class="btn" (click)="addMockSession(60)">+60 min</button>
-          </div>
-        </div>
-      </section>
+    <div class="kpi">
+      <div class="timer">
+        <button class="btn" (click)="toggleTimer()">
+          {{ running ? 'Pause' : 'Start' }}
+        </button>
+        <button class="btn ghost" (click)="resetTimer()" [disabled]="isZero()">Reset</button>
+      </div>
+      <div class="timer-display">{{ display() }}</div>
+    </div>
+  </section>
 
-      <div class="grid">
-        <section class="panel">
-          <h3>Last 3 weeks</h3>
-          <div class="heatmap">
-            <div
-              class="day"
-              *ngFor="let d of heatmapDays()"
-              [attr.title]="d.date + ' • ' + d.minutes + ' min'"
-              [class.lv1]="d.minutes > 0 && d.minutes < 30"
-              [class.lv2]="d.minutes >= 30 && d.minutes < 60"
-              [class.lv3]="d.minutes >= 60 && d.minutes < 120"
-              [class.lv4]="d.minutes >= 120"
-            ></div>
-          </div>
-          <div class="legend">
-            <span>0</span>
-            <span class="swatch lv1"></span>
-            <span class="swatch lv2"></span>
-            <span class="swatch lv3"></span>
-            <span class="swatch lv4"></span>
-          </div>
-        </section>
-
-        <section class="panel">
-          <h3>Recent sessions</h3>
-          <ul class="sessions">
-            <li *ngFor="let s of sessions()">
-              <span>{{ s.date }}</span>
-              <span class="muted">{{ s.course || 'Unassigned' }}</span>
-              <strong>{{ s.minutes }} min</strong>
-            </li>
-          </ul>
-        </section>
+  <div class="grid">
+    <section class="panel">
+      <h3>Last 3 weeks</h3>
+      <div class="heatmap">
+        <div
+          class="day"
+          *ngFor="let d of heatmapDays()"
+          [attr.title]="d.date + ' • ' + d.minutes + ' min'"
+          [class.lv1]="d.minutes > 0 && d.minutes < 30"
+          [class.lv2]="d.minutes >= 30 && d.minutes < 60"
+          [class.lv3]="d.minutes >= 60 && d.minutes < 120"
+          [class.lv4]="d.minutes >= 120"
+        ></div>
+      </div>
+      <div class="legend">
+        <span>0</span>
+        <span class="swatch lv1"></span>
+        <span class="swatch lv2"></span>
+        <span class="swatch lv3"></span>
+        <span class="swatch lv4"></span>
       </div>
     </section>
-  </body>
-</html>
+
+    <section class="panel">
+      <h3>Recent sessions</h3>
+      <ul class="sessions">
+        <li *ngFor="let s of sessions()">
+          <span>{{ s.date }}</span>
+          <span class="muted">{{ s.course || 'Unassigned' }}</span>
+          <strong>{{ s.minutes }} min</strong>
+        </li>
+      </ul>
+    </section>
+  </div>
+</section>
+<script src="timer.js" defer></script>
